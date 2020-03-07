@@ -6,10 +6,9 @@ export ZSH="/Users/michae.lmelody/.oh-my-zsh"
 export TERM="xterm-256color"
 
 # Environment Variables
-source .env_vars
+source ~/Repositories/Personal/dotfiles/.env_vars
 
 # Powerlevel9k
-
 ZSH_THEME="powerlevel9k/powerlevel9k"
 POWERLEVEL9K_MODE='nerdfont-complete'
 
@@ -92,10 +91,13 @@ alias gg='git gui &'
 alias stopcons='docker stop $(docker ps -aq)'
 alias removecons='docker rm $(docker ps -a -q)'
 alias killcons='stopcons && removecons'
+alias cleandock='removecons && docker volume prune && docker system prune'
 
 ## Directory
 alias repos='cd ~/Repositories'
-alias ls='ls -ltha'
+
+export LSCOLORS='BxBxhxDxfxhxhxhxhxcxcx'
+alias ls='ls -lthaG'
 
 alias show-all='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
 alias hide-all='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
@@ -107,6 +109,7 @@ alias vc='code .'
 
 ## IP
 alias ip='curl ifconfig.io'
+alias localip='ipconfig getifaddr en0'
 
 ## Python
 alias activate='. venv/bin/activate'
@@ -119,18 +122,23 @@ alias lamb='sam build && sam local invoke SpotifyPlayHistoryListener  --event ev
 ## Brew
 alias services='brew services list'
 
+# Grep
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
 # Functions
 hist(){
   history | grep "$1"
 }
 
-mk(){
-  mkdir "$1"
+mkd(){
+  mkdir -p "$1"
   cd "$1"
 }
 
 # Super top secret things I don't want the outside world to see!
-source .secret_stuff
+source ~/Repositories/Personal/dotfiles/.secret_stuff
 
 # NVM
 export NVM_DIR=~/.nvm
