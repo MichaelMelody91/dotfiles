@@ -31,7 +31,7 @@ zsh_docker_containers(){
 POWERLEVEL9K_CUSTOM_DOCKER_CONTAINERS="zsh_docker_containers"
 POWERLEVEL9K_CUSTOM_DOCKER_CONTAINERS_BACKGROUND="P9KGT_TERMINAL_BACKGROUND"
 
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs newline custom_docker_containers virtualenv)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs custom_docker_containers virtualenv)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
 
 # Prompt
@@ -127,6 +127,10 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
+# Fuzzy file finder
+alias v='nvim'
+alias f='v `fzf -i`'
+
 # Functions
 hist(){
   history | grep "$1"
@@ -136,6 +140,18 @@ mkd(){
   mkdir -p "$1"
   cd "$1"
 }
+
+initmvn(){
+  mkdir -p src/main/java
+  mkdir -p src/main/resources
+  mkdir -p src/test/java
+  mkdir -p src/test/resources
+}
+
+# https://github.com/mathiasbynens/dotfiles/blob/master/.aliases - Inspo
+for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
+  alias "${method}"="curl -X "${method}""
+done
 
 # Super top secret things I don't want the outside world to see!
 source ~/Repositories/Personal/dotfiles/.secret_stuff

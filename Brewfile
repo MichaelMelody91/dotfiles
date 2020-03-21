@@ -33,6 +33,11 @@ brew "tree"
 brew "wget"
 brew "yq"
 brew "github/gh/gh"
+brew "scala"
+brew "neovim"
+brew "fzf"
+brew "the_silver_searcher"
+
 
 # Fonts
 cask "font-hack-nerd-font"
