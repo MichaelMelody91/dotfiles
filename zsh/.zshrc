@@ -91,7 +91,7 @@ alias gg='git gui &'
 alias stopcons='docker stop $(docker ps -aq)'
 alias removecons='docker rm $(docker ps -a -q)'
 alias killcons='stopcons && removecons'
-alias cleandock='removecons && docker volume prune && docker system prune'
+alias cleandock='docker volume prune && docker system prune'
 
 ## Directory
 alias repos='cd ~/Repositories'
@@ -118,9 +118,22 @@ alias activate='. venv/bin/activate'
 alias lamb='sam build && sam local invoke SpotifyPlayHistoryListener  --event events/event.json'
 
 ## Java
+initmvn(){
+  mkdir -p src/main/java
+  mkdir -p src/main/resources
+  mkdir -p src/test/java
+  mkdir -p src/test/resources
+}
 
 ## Brew
 alias services='brew services list'
+
+## Bash
+sh_script(){
+  touch "$1"
+  chmod 777 "$1"
+  echo '#!/bin/sh' > "$1"
+}
 
 # Grep
 alias grep='grep --color=auto'
@@ -133,7 +146,7 @@ alias f='v `fzf -i`'
 
 # Functions
 hist(){
-  history | grep "$1"
+  history | grep -i -w "$1"
 }
 
 mkd(){
@@ -141,12 +154,6 @@ mkd(){
   cd "$1"
 }
 
-initmvn(){
-  mkdir -p src/main/java
-  mkdir -p src/main/resources
-  mkdir -p src/test/java
-  mkdir -p src/test/resources
-}
 
 # https://github.com/mathiasbynens/dotfiles/blob/master/.aliases - Inspo
 for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do

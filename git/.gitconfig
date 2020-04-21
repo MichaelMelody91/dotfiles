@@ -30,6 +30,8 @@
 
 	open = "!f() { open `git config --get remote.origin.url`; }; f"
 
+	latest-tag = 'git describe --abbrev=0 --tags'
+
 [apply]
 
 	# Detect whitespace errors when applying a patch
