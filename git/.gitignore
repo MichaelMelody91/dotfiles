@@ -293,5 +293,8 @@ zsdoc/data
 /tests/_output/*
 !/tests/_output/.gitkeep
 
-# End of https://www.gitignore.io/api/zsh,node,java,macos,python
+
+### IntelliJ
+
+.idea/**
 
