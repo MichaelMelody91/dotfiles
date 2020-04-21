@@ -104,7 +104,7 @@ alias hide-all='defaults write com.apple.finder AppleShowAllFiles NO; killall Fi
 
 ## Open apps
 alias ij='idea .'
-alias subl="sublime ."
+# alias subl="sublime ."
 alias vc='code .'
 
 ## IP
