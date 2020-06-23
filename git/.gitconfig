@@ -30,6 +30,8 @@
 
 	open = "!f() { open `git config --get remote.origin.url`; }; f"
 
+	clone-url = config --get remote.origin.url
+
 	latest-tag = 'git describe --abbrev=0 --tags'
 
 [apply]

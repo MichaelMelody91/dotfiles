@@ -102,6 +102,8 @@ alias ls='ls -lthaG'
 alias show-all='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
 alias hide-all='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
 
+alias yml='yq -C r -'
+
 ## Open apps
 alias ij='idea .'
 alias subl="sublime ."
@@ -154,6 +156,19 @@ mkd(){
   cd "$1"
 }
 
+sonar(){
+  if [ "$(docker ps -a | grep sonarqube)" ]; then
+    if [ ! "$(docker ps | grep sonarqube)" ]; then
+        echo 'starting already existing sonarqube instance...'
+        docker start sonarqube
+    else
+      echo 'Already running, idiot!'
+    fi
+  else
+    echo 'starting sonarqube...'
+    docker run -d --name sonarqube -p 9000:9000 sonarqube
+  fi
+}
 
 # https://github.com/mathiasbynens/dotfiles/blob/master/.aliases - Inspo
 for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
@@ -170,3 +185,7 @@ source $(brew --prefix nvm)/nvm.sh
 # Jenv
 export PATH="$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
+
+# tabtab source for packages
+# uninstall by removing these lines
+[[ -f ~/.config/tabtab/__tabtab.zsh ]] && . ~/.config/tabtab/__tabtab.zsh || true
