@@ -2,6 +2,8 @@
 
 echo "Setting up workstation..."
 
+WORKING_DIR=$(dirname $0)
+
 # Set up symlinks
 
 # Removes .zshrc from $HOME (if it exists) and symlinks the .zshrc file from the .dotfiles
@@ -33,3 +35,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 
 # Install powerlevel9k
 git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
+
+# Set up GitHub access and repos
+source ./scripts/configure_github_auth.sh $WORKING_DIR/.env_vars
+source ./scripts/clone_github_repos.sh $HOME/Repositories
