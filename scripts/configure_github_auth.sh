@@ -21,6 +21,4 @@ password=$tokenvar" | git credential-osxkeychain store
 grep -q "GITHUB_TOKEN=" "$1" &&  sed -i '' 's/GITHUB_TOKEN=.*/GITHUB_TOKEN='"$tokenvar"'/g' "$1" || echo "GITHUB_TOKEN=$tokenvar" >> "$1"
 export "GITHUB_TOKEN=$tokenvar"
 
-# source clone_repos.sh "$2"
-
 
