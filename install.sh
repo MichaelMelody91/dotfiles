@@ -5,25 +5,11 @@ echo "Setting up workstation..."
 WORKING_DIR=$(dirname $0)
 
 # Set up symlinks
-
-# Removes .zshrc from $HOME (if it exists) and symlinks the .zshrc file from the .dotfiles
-rm -rf $HOME/.zshrc
-ln -s ./zsh/.zshrc $HOME/.zshrc
-
-
-# Removes .gitconfig from $HOME (if it exists) and symlinks the .gitconfig file from the .dotfiles
-rm -rf $HOME/.gitconfig
-ln -s ./git/.gitconfig $HOME/.gitconfig
-
-rm -rf $HOME/.gitignore
-ln -s ./git/.gitconfig $HOME/.gitignore
-
-rm -rf $HOME/.mavenrc
-ln -s .mavenrc $HOME/.mavenrc
+source ./scripts/symlinks.sh $WORKING_DIR
 
 # Install brew, tap bundle and then use the provided Brewfile to install everything
 if test ! $(which brew); then
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 fi
 
 brew update

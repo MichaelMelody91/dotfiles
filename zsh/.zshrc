@@ -2,11 +2,11 @@
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/michae.lmelody/.oh-my-zsh"
+export ZSH="/Users/michaelmelody/.oh-my-zsh"
 export TERM="xterm-256color"
 
 # Environment Variables
-source ~/Repositories/Personal/dotfiles/.env_vars
+source ~/Repositories/michaelmelody91/dotfiles/.env_vars
 
 # Powerlevel9k
 ZSH_THEME="powerlevel9k/powerlevel9k"
@@ -80,12 +80,13 @@ source $ZSH/oh-my-zsh.sh
 # aliases
 
 ## zsh
-alias zshrc='. ~/.zshrc'
-alias zshconfig="mate ~/.zshrc"
+alias z='. ~/.zshrc'
+alias zc="v ~/.zshrc"
 
 ## Git
 alias gfl='git fetch && git pull'
 alias gg='git gui &'
+alias gcong='git checkout env/nextgen-dev'
 
 ## Docker
 alias stopcons='docker stop $(docker ps -aq)'
@@ -93,8 +94,19 @@ alias removecons='docker rm $(docker ps -a -q)'
 alias killcons='stopcons && removecons'
 alias cleandock='docker volume prune && docker system prune'
 
+rmimgs() {
+  docker images -a | grep "$1" | awk '{print $3}' | xargs docker rmi
+}
+
+excdock(){
+  docker exec -it "$1" "$2"
+}
+
+alias rmdimg='docker rmi $(docker images -f "dangling=true" -q)'
+
 ## Directory
 alias repos='cd ~/Repositories'
+alias mm91='cd ~/Repositories/michaelmelody91'
 
 export LSCOLORS='BxBxhxDxfxhxhxhxhxcxcx'
 alias ls='ls -lthaG'
@@ -108,6 +120,7 @@ alias yml='yq -C r -'
 alias ij='idea .'
 alias subl="sublime ."
 alias vc='code .'
+alias ghd='github .'
 
 ## IP
 alias ip='curl ifconfig.io'
@@ -125,6 +138,12 @@ initmvn(){
   mkdir -p src/main/resources
   mkdir -p src/test/java
   mkdir -p src/test/resources
+}
+
+jdk() {
+  version=$1
+  export JAVA_HOME=$(/usr/libexec/java_home -v"$version");
+  java -version
 }
 
 ## Brew
@@ -170,13 +189,44 @@ sonar(){
   fi
 }
 
+port(){
+  lsof -P -iTCP:"$1"
+}
+
+# Swagger/OpenAPI
+
+swgedit() {
+  if [ "$(docker ps -a | grep swagger-editor)" ]; then
+    if [ ! "$(docker ps | grep swagger-editor)" ]; then
+        echo 'starting already existing swagger-editor...'
+        docker start swagger-editor && open http://localhost
+    else
+      open http://localhost
+    fi
+  else
+    echo 'starting swagger-editor...'
+    docker run -d -p 80:8080 -d --name swagger-editor swaggerapi/swagger-editor && open http://localhost
+  fi
+}
+
+work() {
+  company=$(gh api graphql -f query='query MyQuery {
+    user(login: "michaelmelody91") {
+      company
+    }
+  }
+  ' | jq '.data.user.company')
+  company=${company:2:-2}
+  cd ~/Repositories/$company
+}
+
 # https://github.com/mathiasbynens/dotfiles/blob/master/.aliases - Inspo
 for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
   alias "${method}"="curl -X "${method}""
 done
 
 # Super top secret things I don't want the outside world to see!
-source ~/Repositories/Personal/dotfiles/.secret_stuff
+source ~/Repositories/michaelmelody91/dotfiles/.secret_stuff
 
 # NVM
 export NVM_DIR=~/.nvm
@@ -185,6 +235,9 @@ source $(brew --prefix nvm)/nvm.sh
 # Jenv
 export PATH="$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
+
+# trash-cli
+alias rm=trash
 
 # tabtab source for packages
 # uninstall by removing these lines

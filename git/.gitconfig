@@ -1,6 +1,6 @@
 [user]
-	name = michaelmelody91
-	email = michael.melody@smartbear.com
+	name = Michael Melody
+	email = michaelmelody91@gmail.com
 [credential]
 	# helper = osxkeychain
 
@@ -42,7 +42,7 @@
 [core]
 
 	# Use custom `.gitignore` and `.gitattributes`
-	excludesfile = ~/.gitignore
+	excludesfile = /Users/michaelmelody/.gitignore
 	# attributesfile = ~/.gitattributes
 
 	# Prevent showing files whose names contain non-ASCII symbols as unversioned.
@@ -100,3 +100,18 @@
 	# Make `git push` push relevant annotated tags when pushing branches out.
 	followTags = true
 
+[pull]
+	rebase = false
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Users/michaelmelody/Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[commit]
+	template = /Users/michaelmelody/.stCommitMsg
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
